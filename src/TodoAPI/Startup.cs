@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 using TodoAPI.Models;
 
 namespace TodoAPI
@@ -22,7 +23,11 @@ namespace TodoAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<TodoContext>(option => option.UseNpgsql(_configuration.GetConnectionString("PostgreSQLConnection")));
+            var builder = new NpgsqlConnectionStringBuilder();
+            builder.ConnectionString = _configuration.GetConnectionString("PostgreSQLConnection");
+            builder.Username = _configuration["UserID"];
+            builder.Password = _configuration["Password"];
+            services.AddDbContext<TodoContext>(option => option.UseNpgsql(builder.ConnectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
