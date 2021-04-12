@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using TodoAPI.Models;
 
 namespace TodoAPI.Controllers 
 {
@@ -7,11 +8,14 @@ namespace TodoAPI.Controllers
     [ApiController]
     public class TodosController: ControllerBase
     {
+        private readonly TodoContext _context;
+
+        public TodosController(TodoContext context) => _context = context;
+
         [HttpGet]   
-        public IActionResult GetTodos() 
+        public ActionResult<IEnumerable<Todo>> GetTodos() 
         {
-            var todoList = new List<string>{"todo1", "todo2", "todo3"};
-            return Ok(todoList);
+            return Ok(_context.TodoItems);
         }
     }
 }
