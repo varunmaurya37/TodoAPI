@@ -17,4 +17,5 @@ RUN dotnet publish "TodoAPI.csproj" -c Release -o /app/publish
 FROM base as final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "TodoAPI.dll"]
+# ENTRYPOINT ["dotnet", "TodoAPI.dll"]
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet TodoAPI.dll
