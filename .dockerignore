@@ -1,0 +1,4 @@
+# .dockerignore
+
+src/TodoAPI/bin/
+src/TodoAPI/obj/
