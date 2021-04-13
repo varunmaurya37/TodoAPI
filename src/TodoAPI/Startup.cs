@@ -25,8 +25,6 @@ namespace TodoAPI
             services.AddControllers();
             var builder = new NpgsqlConnectionStringBuilder();
             builder.ConnectionString = _configuration.GetConnectionString("PostgreSQLConnection");
-            builder.Username = _configuration["UserID"];
-            builder.Password = _configuration["Password"];
             services.AddDbContext<TodoContext>(option => option.UseNpgsql(builder.ConnectionString));
         }
 
